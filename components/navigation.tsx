@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("home")
-  const [scrolled, setScrolled] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [scrolled, setScrolled] = useState(false);
 
   const navItems = [
     { id: "home", label: "Home" },
@@ -16,36 +16,39 @@ export function Navigation() {
     { id: "projects", label: "Projects" },
     { id: "contact", label: "Contact" },
     { id: "blog", label: "Blog" },
-  ]
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       // Set scrolled state for nav background
       if (window.scrollY > 50) {
-        setScrolled(true)
+        setScrolled(true);
       } else {
-        setScrolled(false)
+        setScrolled(false);
       }
 
       // Set active section
-      const sections = navItems.map((item) => document.getElementById(item.id))
-      const scrollPosition = window.scrollY + 100
+      const sections = navItems.map((item) => document.getElementById(item.id));
+      const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i]
+        const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navItems[i].id)
-          break
+          setActiveSection(navItems[i].id);
+          break;
         }
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className={`fixed-nav transition-all duration-300 ${scrolled ? "shadow-md" : ""}`}>
+    <header
+      className={`fixed-nav transition-all duration-300 ${
+        scrolled ? "shadow-md" : ""
+      }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
@@ -67,8 +70,7 @@ export function Navigation() {
                         ? "text-cyan-400 border-b-2 border-cyan-400"
                         : "text-gray-300 hover:text-white"
                     }`}
-                    onClick={() => setActiveSection(item.id)}
-                  >
+                    onClick={() => setActiveSection(item.id)}>
                     {item.label}
                   </Link>
                 </li>
@@ -78,8 +80,15 @@ export function Navigation() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button type="button" className="text-gray-300 hover:text-white" onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <button
+              type="button"
+              className="text-gray-300 hover:text-white"
+              onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -94,13 +103,14 @@ export function Navigation() {
                 <Link
                   href={`#${item.id}`}
                   className={`block px-3 py-2 text-base ${
-                    activeSection === item.id ? "text-cyan-400 font-medium" : "text-gray-300 hover:text-white"
+                    activeSection === item.id
+                      ? "text-cyan-400 font-medium"
+                      : "text-gray-300 hover:text-white"
                   }`}
                   onClick={() => {
-                    setActiveSection(item.id)
-                    setIsOpen(false)
-                  }}
-                >
+                    setActiveSection(item.id);
+                    setIsOpen(false);
+                  }}>
                   {item.label}
                 </Link>
               </li>
@@ -109,5 +119,5 @@ export function Navigation() {
         </nav>
       )}
     </header>
-  )
+  );
 }
