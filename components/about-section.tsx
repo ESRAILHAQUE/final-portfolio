@@ -7,9 +7,12 @@ export function AboutSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative">
             <img
-              src="/profile.png?height=400&width=400"
-              alt="Esrail Haque"
-              className="rounded-lg shadow-lg w-full"
+              src="/profile.png"
+              width={400}
+              height={400}
+              loading="lazy"
+              alt="Portrait of Esrail Haque, Full-Stack Developer"
+              className="rounded-lg shadow-lg w-full h-auto"
             />
 
             {/* Signature overlay */}
@@ -57,7 +60,9 @@ export function AboutSection() {
                   <h4 className="text-lg font-medium text-white">
                     Bachelor of Electrical and Electronics Engineering
                   </h4>
-                  <p className="text-gray-400">Sylhet Engineering College • 2022 - Present</p>
+                  <p className="text-gray-400">
+                    Sylhet Engineering College • 2022 - Present
+                  </p>
                 </div>
               </div>
             </div>

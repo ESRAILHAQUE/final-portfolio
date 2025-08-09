@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { ExternalLink, Github } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-import { useRef } from "react"
-import { useInView } from "framer-motion"
+import { ExternalLink, Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { useRef } from "react";
+import { useInView } from "framer-motion";
 
 export function ProjectsSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const projects = [
     {
@@ -47,7 +47,7 @@ export function ProjectsSection() {
       liveUrl: "https://example.com",
       githubUrl: "https://github.com/example",
     },
-  ]
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -58,7 +58,7 @@ export function ProjectsSection() {
         delayChildren: 0.2,
       },
     },
-  }
+  };
 
   const projectVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -70,7 +70,7 @@ export function ProjectsSection() {
         ease: [0.22, 1, 0.36, 1],
       },
     },
-  }
+  };
 
   const imageVariants = {
     hidden: { opacity: 0, scale: 1.1 },
@@ -82,7 +82,7 @@ export function ProjectsSection() {
         ease: [0.22, 1, 0.36, 1],
       },
     },
-  }
+  };
 
   const techBadgeVariants = {
     hidden: { opacity: 0, scale: 0.8 },
@@ -95,7 +95,7 @@ export function ProjectsSection() {
         ease: "easeOut",
       },
     }),
-  }
+  };
 
   return (
     <section id="projects" className="py-20">
@@ -104,8 +104,7 @@ export function ProjectsSection() {
           className="text-3xl font-bold text-cyan-400 mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-        >
+          transition={{ duration: 0.6 }}>
           Projects
         </motion.h2>
 
@@ -113,8 +112,7 @@ export function ProjectsSection() {
           className="grid md:grid-cols-2 gap-8"
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+          animate={isInView ? "visible" : "hidden"}>
           {projects.map((project, index) => (
             <motion.div
               key={index}
@@ -122,10 +120,10 @@ export function ProjectsSection() {
               variants={projectVariants}
               whileHover={{
                 y: -10,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
+                boxShadow:
+                  "0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
                 transition: { duration: 0.3 },
-              }}
-            >
+              }}>
               <div className="relative h-48 overflow-hidden">
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-tr from-cyan-400/20 to-pink-500/20 z-10 opacity-0"
@@ -145,8 +143,7 @@ export function ProjectsSection() {
                   className="text-xl font-semibold text-white"
                   initial={{ opacity: 0 }}
                   animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                >
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}>
                   {project.title}
                 </motion.h3>
 
@@ -154,8 +151,7 @@ export function ProjectsSection() {
                   className="text-gray-400 text-sm"
                   initial={{ opacity: 0 }}
                   animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                >
+                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}>
                   {project.description}
                 </motion.p>
 
@@ -170,36 +166,43 @@ export function ProjectsSection() {
                         scale: 1.1,
                         backgroundColor: "rgba(56, 189, 248, 0.2)",
                         transition: { duration: 0.2 },
-                      }}
-                    >
+                      }}>
                       {tech}
                     </motion.span>
                   ))}
                 </div>
 
                 <div className="flex gap-4 pt-4">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}>
                     <Button
                       asChild
                       variant="outline"
                       size="sm"
-                      className="border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 transition-all"
-                    >
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      className="border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 transition-all">
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer">
                         <ExternalLink className="mr-2 h-4 w-4" />
                         Live Demo
                       </a>
                     </Button>
                   </motion.div>
 
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}>
                     <Button
                       asChild
                       variant="outline"
                       size="sm"
-                      className="border-gray-600 text-gray-400 hover:bg-gray-800 transition-all"
-                    >
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                      className="border-gray-600 text-gray-400 hover:bg-gray-800 transition-all">
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer">
                         <Github className="mr-2 h-4 w-4" />
                         Code
                       </a>
@@ -226,5 +229,5 @@ export function ProjectsSection() {
         />
       </div>
     </section>
-  )
+  );
 }
