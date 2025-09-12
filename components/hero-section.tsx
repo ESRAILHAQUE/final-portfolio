@@ -150,7 +150,7 @@ export function HeroSection() {
                   <div className="text-sm text-gray-400">Projects</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-pink-500">2+</div>
+                  <div className="text-2xl font-bold text-pink-500">4+</div>
                   <div className="text-sm text-gray-400">Years</div>
                 </div>
                 <div className="text-center">
