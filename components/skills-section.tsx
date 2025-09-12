@@ -11,6 +11,7 @@ type Skill = {
   level: number; // 0 - 100
   image: string;
   category: SkillCategory;
+  invert?: boolean;
 };
 
 const ALL_CATEGORIES: Array<"All" | SkillCategory> = [
@@ -31,7 +32,13 @@ export function SkillsSection() {
       { name: "JavaScript", level: 92, image: "/js.png", category: "Frontend" },
       { name: "TypeScript", level: 86, image: "/ts.png", category: "Frontend" },
       { name: "React", level: 92, image: "/react.png", category: "Frontend" },
-      { name: "Next.js", level: 88, image: "/next.png", category: "Frontend" },
+      {
+        name: "Next.js",
+        level: 88,
+        image: "/next.png",
+        category: "Frontend",
+        invert: true,
+      },
       {
         name: "Tailwind CSS",
         level: 90,
@@ -53,6 +60,12 @@ export function SkillsSection() {
         name: "PostgreSQL",
         level: 72,
         image: "/postgresql.png",
+        category: "Backend",
+      },
+      {
+        name: "Prisma",
+        level: 78,
+        image: "/prisma.png",
         category: "Backend",
       },
     ],
@@ -83,7 +96,9 @@ export function SkillsSection() {
   };
 
   return (
-    <section id="skills" className="py-24 bg-navy-dark">
+    <section
+      id="skills"
+      className="py-24 bg-navy-dark relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" ref={sectionRef}>
         {/* Heading */}
         <motion.div
@@ -97,8 +112,8 @@ export function SkillsSection() {
             </span>
           </h2>
           <p className="mt-3 text-sm sm:text-base text-gray-400 max-w-2xl mx-auto">
-            A selection of tools I use to craft performant, scalable, and
-            delightful user experiences.
+            A curated stack I love building with — modern, performant, and
+            delightful.
           </p>
         </motion.div>
 
@@ -135,62 +150,70 @@ export function SkillsSection() {
             <motion.div
               key={skill.name}
               variants={cardVariants}
-              whileHover={{ y: -4 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[0.03] p-4 sm:p-5 backdrop-blur-sm">
-              {/* Subtle glow */}
+              whileHover={{ y: -6, rotateX: 1.2, rotateY: -1.2 }}
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[0.03] p-4 backdrop-blur-sm">
+              {/* Gradient outline on hover */}
               <div
-                className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{
                   background:
-                    "radial-gradient(600px circle at var(--x,50%) var(--y,50%), rgba(56,189,248,0.15), transparent 40%)",
+                    "linear-gradient(120deg, rgba(56,189,248,0.25), rgba(236,72,153,0.25))",
+                  mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                  WebkitMask:
+                    "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
                 }}
               />
 
-              <div className="flex items-center gap-3 sm:gap-4">
-                {/* Circular progress with image */}
-                <div className="relative w-16 h-16 sm:w-20 sm:h-20">
+              {/* Aura glow */}
+              <div
+                className="absolute -inset-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-3xl"
+                style={{
+                  background:
+                    "radial-gradient(120px 80px at 20% 20%, rgba(56,189,248,0.15), transparent), radial-gradient(120px 80px at 80% 80%, rgba(236,72,153,0.12), transparent)",
+                }}
+              />
+
+              <div className="relative flex items-center gap-3">
+                {/* Icon chip */}
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24">
                   <div
-                    className="absolute inset-0 rounded-full"
+                    className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-cyan-400/20 to-pink-500/20"
                     aria-hidden
-                    style={{
-                      background: `conic-gradient(rgba(56,189,248,0.9) ${
-                        skill.level * 3.6
-                      }deg, rgba(56,189,248,0.12) 0deg)`,
-                    }}
                   />
-                  <div className="absolute inset-1 rounded-full bg-navy/80 border border-white/10 flex items-center justify-center">
+                  <div className="absolute inset-[4px] rounded-xl bg-navy/80 border border-white/10 flex items-center justify-center">
                     <Image
                       src={skill.image}
                       alt={skill.name}
-                      width={56}
-                      height={56}
-                      className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+                      width={80}
+                      height={80}
+                      className={`w-12 h-12 sm:w-16 sm:h-16 object-contain ${
+                        skill.invert ? "invert" : ""
+                      }`}
                     />
                   </div>
                 </div>
 
-                <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base font-semibold text-white truncate">
-                    {skill.name}
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <div className="h-1.5 w-20 sm:w-24 rounded-full bg-white/10 overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={isInView ? { width: `${skill.level}%` } : {}}
-                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                        className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-cyan-500"
-                      />
-                    </div>
-                    <span className="text-xs text-gray-400 tabular-nums">
-                      {skill.level}%
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-sm sm:text-base font-semibold text-white whitespace-normal break-words">
+                      {skill.name}
+                    </h3>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-gray-300">
+                      {skill.category}
                     </span>
                   </div>
-                  <p className="mt-1 text-[11px] sm:text-xs text-gray-400">
-                    {skill.category}
+                  <p className="mt-1 text-xs text-gray-400 line-clamp-2">
+                    Building modern interfaces and systems with {skill.name}.
                   </p>
                 </div>
               </div>
+
+              {/* Shine */}
+              <motion.div
+                className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-white/10 blur-2xl"
+                animate={isInView ? { x: [0, 20, 0], y: [0, -10, 0] } : {}}
+                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
+              />
             </motion.div>
           ))}
         </motion.div>
@@ -199,6 +222,7 @@ export function SkillsSection() {
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-0 h-48 w-[80%] -translate-x-1/2 bg-gradient-to-b from-cyan-500/10 to-transparent blur-3xl" />
           <div className="absolute right-10 bottom-0 h-40 w-40 bg-pink-500/10 blur-2xl rounded-full" />
+          <div className="absolute inset-0 bg-[radial-gradient(1000px_200px_at_50%_-10%,rgba(56,189,248,0.08),transparent)]" />
         </div>
       </div>
     </section>
