@@ -96,7 +96,7 @@ export function SkillsSection() {
   };
 
   const leftCardVariants = {
-    hidden: { opacity: 0, x: -100, y: 30, scale: 0.95 },
+    hidden: { opacity: 0, x: -20, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       x: 0,
@@ -110,7 +110,7 @@ export function SkillsSection() {
   };
 
   const rightCardVariants = {
-    hidden: { opacity: 0, x: 100, y: 30, scale: 0.95 },
+    hidden: { opacity: 0, x: 20, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       x: 0,

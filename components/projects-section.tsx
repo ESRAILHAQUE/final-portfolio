@@ -100,7 +100,7 @@ export function ProjectsSection() {
   };
 
   const leftProjectVariants = {
-    hidden: { opacity: 0, x: -100, y: 30, scale: 0.95 },
+    hidden: { opacity: 0, x: -20, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       x: 0,
@@ -114,7 +114,7 @@ export function ProjectsSection() {
   };
 
   const rightProjectVariants = {
-    hidden: { opacity: 0, x: 100, y: 30, scale: 0.95 },
+    hidden: { opacity: 0, x: 20, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       x: 0,
