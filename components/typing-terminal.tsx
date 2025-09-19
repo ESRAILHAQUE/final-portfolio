@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Terminal } from "lucide-react"
-import { motion } from "framer-motion"
+import { useState, useEffect } from "react";
+import { Terminal } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function TypingTerminal() {
-  const [currentLineIndex, setCurrentLineIndex] = useState(0)
-  const [currentCharIndex, setCurrentCharIndex] = useState(0)
-  const [displayedLines, setDisplayedLines] = useState<string[]>([])
-  const [isTyping, setIsTyping] = useState(true)
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [currentCharIndex, setCurrentCharIndex] = useState(0);
+  const [displayedLines, setDisplayedLines] = useState<string[]>([]);
+  const [isTyping, setIsTyping] = useState(true);
 
   const codeLines = [
     "$ npm create next-app@latest portfolio",
@@ -28,112 +28,111 @@ export function TypingTerminal() {
     "",
     "console.log('Ready to build amazing things!');",
     "> Ready to build amazing things! 🚀",
-  ]
+  ];
 
   useEffect(() => {
-    if (!isTyping) return
+    if (!isTyping) return;
 
     const timer = setTimeout(
       () => {
-        const currentLine = codeLines[currentLineIndex]
+        const currentLine = codeLines[currentLineIndex];
 
         if (currentCharIndex < currentLine.length) {
           // Typing current line
           setDisplayedLines((prev) => {
-            const newLines = [...prev]
-            newLines[currentLineIndex] = currentLine.slice(0, currentCharIndex + 1)
-            return newLines
-          })
-          setCurrentCharIndex((prev) => prev + 1)
+            const newLines = [...prev];
+            newLines[currentLineIndex] = currentLine.slice(
+              0,
+              currentCharIndex + 1
+            );
+            return newLines;
+          });
+          setCurrentCharIndex((prev) => prev + 1);
         } else {
           // Move to next line
           if (currentLineIndex < codeLines.length - 1) {
-            setCurrentLineIndex((prev) => prev + 1)
-            setCurrentCharIndex(0)
-            setDisplayedLines((prev) => [...prev, ""])
+            setCurrentLineIndex((prev) => prev + 1);
+            setCurrentCharIndex(0);
+            setDisplayedLines((prev) => [...prev, ""]);
           } else {
             // Finished typing, restart after delay
             setTimeout(() => {
-              setCurrentLineIndex(0)
-              setCurrentCharIndex(0)
-              setDisplayedLines([])
-            }, 3000)
+              setCurrentLineIndex(0);
+              setCurrentCharIndex(0);
+              setDisplayedLines([]);
+            }, 3000);
           }
         }
       },
-      currentCharIndex === 0 && codeLines[currentLineIndex] === "" ? 500 : Math.random() * 100 + 50,
-    )
+      currentCharIndex === 0 && codeLines[currentLineIndex] === ""
+        ? 500
+        : Math.random() * 100 + 50
+    );
 
-    return () => clearTimeout(timer)
-  }, [currentLineIndex, currentCharIndex, isTyping, codeLines])
+    return () => clearTimeout(timer);
+  }, [currentLineIndex, currentCharIndex, isTyping, codeLines]);
 
   return (
     <motion.div
-      className="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden shadow-2xl max-w-2xl"
+      className="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl"
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.6, delay: 0.3 }}
-    >
+      transition={{ duration: 0.6, delay: 0.3 }}>
       {/* Terminal Header */}
       <motion.div
-        className="bg-gray-800 px-4 py-3 flex items-center space-x-2"
+        className="bg-gray-800 px-2 sm:px-3 md:px-4 py-2 sm:py-3 flex items-center space-x-1 sm:space-x-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.5 }}
-      >
-        <div className="flex space-x-2">
+        transition={{ duration: 0.4, delay: 0.5 }}>
+        <div className="flex space-x-1 sm:space-x-2">
           <motion.div
-            className="w-3 h-3 bg-red-500 rounded-full"
+            className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.3, delay: 0.6 }}
           />
           <motion.div
-            className="w-3 h-3 bg-yellow-500 rounded-full"
+            className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.3, delay: 0.7 }}
           />
           <motion.div
-            className="w-3 h-3 bg-green-500 rounded-full"
+            className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.3, delay: 0.8 }}
           />
         </div>
         <motion.div
-          className="flex items-center space-x-2 ml-4"
+          className="flex items-center space-x-1 sm:space-x-2 ml-2 sm:ml-4"
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, delay: 0.9 }}
-        >
-          <Terminal className="h-4 w-4 text-gray-400" />
-          <span className="text-gray-400 text-sm">terminal</span>
+          transition={{ duration: 0.4, delay: 0.9 }}>
+          <Terminal className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400" />
+          <span className="text-gray-400 text-xs sm:text-sm">terminal</span>
         </motion.div>
       </motion.div>
 
       {/* Terminal Content */}
       <motion.div
-        className="p-4 h-80 overflow-hidden font-mono text-sm"
+        className="p-2 sm:p-3 md:p-4 h-72 sm:h-96 md:h-[32rem] overflow-hidden font-mono text-xs sm:text-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 1 }}
-      >
+        transition={{ duration: 0.4, delay: 1 }}>
         {displayedLines.map((line, index) => (
           <motion.div
             key={index}
             className="mb-1"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.2 }}
-          >
+            transition={{ duration: 0.2 }}>
             <span className={getLineColor(line, index)}>{line}</span>
             {index === currentLineIndex && (
               <motion.span
                 className="bg-cyan-400 text-gray-900"
                 animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
-              >
+                transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}>
                 ▋
               </motion.span>
             )}
@@ -141,15 +140,16 @@ export function TypingTerminal() {
         ))}
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 function getLineColor(line: string, index: number): string {
-  if (line.startsWith("$")) return "text-green-400"
-  if (line.startsWith("//")) return "text-gray-500"
-  if (line.includes("const") || line.includes("console")) return "text-purple-400"
-  if (line.includes(":")) return "text-cyan-400"
-  if (line.includes("'") || line.includes('"')) return "text-yellow-400"
-  if (line.startsWith(">")) return "text-green-300"
-  return "text-gray-300"
+  if (line.startsWith("$")) return "text-green-400";
+  if (line.startsWith("//")) return "text-gray-500";
+  if (line.includes("const") || line.includes("console"))
+    return "text-purple-400";
+  if (line.includes(":")) return "text-cyan-400";
+  if (line.includes("'") || line.includes('"')) return "text-yellow-400";
+  if (line.startsWith(">")) return "text-green-300";
+  return "text-gray-300";
 }

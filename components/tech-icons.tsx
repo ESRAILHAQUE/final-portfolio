@@ -23,14 +23,12 @@ export function TechIcons() {
     {
       name: "Express",
       color: "bg-gray-700",
-      image:
-        "/express.png",
+      image: "/express.png",
     },
     {
       name: "Node.js",
       color: "bg-green-600",
-      image:
-        "/node.png",
+      image: "/node.png",
     },
     {
       name: "Next.js",
@@ -41,8 +39,7 @@ export function TechIcons() {
     {
       name: "Tailwind",
       color: "bg-cyan-500",
-      image:
-        "/tailwind.png",
+      image: "/tailwind.png",
     },
     {
       name: "Bootstrap",

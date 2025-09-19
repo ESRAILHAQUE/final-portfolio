@@ -95,23 +95,51 @@ export function SkillsSection() {
     },
   };
 
+  const leftCardVariants = {
+    hidden: { opacity: 0, x: -100, y: 30, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  const rightCardVariants = {
+    hidden: { opacity: 0, x: 100, y: 30, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
   return (
     <section
       id="skills"
-      className="py-24 bg-navy-dark relative overflow-hidden">
+      className="py-12 md:py-24 bg-navy-dark relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" ref={sectionRef}>
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">
+          className="text-center mb-8 md:mb-16">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
             <span className="bg-gradient-to-r from-cyan-400 to-pink-500 bg-clip-text text-transparent">
               Skills & Technologies
             </span>
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-gray-400 max-w-2xl mx-auto">
+          <p className="mt-2 md:mt-3 text-sm md:text-base text-gray-400 max-w-2xl mx-auto px-4">
             A curated stack I love building with — modern, performant, and
             delightful.
           </p>
@@ -122,14 +150,14 @@ export function SkillsSection() {
           initial={{ opacity: 0, y: 8 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
+          className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-8 md:mb-12 px-4">
           {ALL_CATEGORIES.map((category) => {
             const isActive = activeCategory === category;
             return (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`relative rounded-full px-4 py-1.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/50 ${
+                className={`relative rounded-full px-3 md:px-4 py-1.5 text-xs md:text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/50 ${
                   isActive
                     ? "bg-cyan-500/10 text-cyan-300 ring-1 ring-cyan-500/30"
                     : "bg-white/5 text-gray-300 hover:bg-white/10"
@@ -145,77 +173,82 @@ export function SkillsSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {filteredSkills.map((skill) => (
-            <motion.div
-              key={skill.name}
-              variants={cardVariants}
-              whileHover={{ y: -6, rotateX: 1.2, rotateY: -1.2 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[0.03] p-4 backdrop-blur-sm">
-              {/* Gradient outline on hover */}
-              <div
-                className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  background:
-                    "linear-gradient(120deg, rgba(56,189,248,0.25), rgba(236,72,153,0.25))",
-                  mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-                  WebkitMask:
-                    "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-                }}
-              />
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
+          {filteredSkills.map((skill, index) => {
+            const isLeft = index % 2 === 0;
+            const variants = isLeft ? leftCardVariants : rightCardVariants;
 
-              {/* Aura glow */}
-              <div
-                className="absolute -inset-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-3xl"
-                style={{
-                  background:
-                    "radial-gradient(120px 80px at 20% 20%, rgba(56,189,248,0.15), transparent), radial-gradient(120px 80px at 80% 80%, rgba(236,72,153,0.12), transparent)",
-                }}
-              />
-
-              <div className="relative flex items-center gap-3">
-                {/* Icon chip */}
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24">
-                  <div
-                    className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-cyan-400/20 to-pink-500/20"
-                    aria-hidden
-                  />
-                  <div className="absolute inset-[4px] rounded-xl bg-navy/80 border border-white/10 flex items-center justify-center">
-                    <Image
-                      src={skill.image}
-                      alt={skill.name}
-                      width={80}
-                      height={80}
-                      className={`w-12 h-12 sm:w-16 sm:h-16 object-contain ${
-                        skill.invert ? "invert" : ""
-                      }`}
-                    />
-                  </div>
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-sm sm:text-base font-semibold text-white whitespace-normal break-words">
-                      {skill.name}
-                    </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-gray-300">
-                      {skill.category}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-xs text-gray-400 line-clamp-2">
-                    Building modern interfaces and systems with {skill.name}.
-                  </p>
-                </div>
-              </div>
-
-              {/* Shine */}
+            return (
               <motion.div
-                className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-white/10 blur-2xl"
-                animate={isInView ? { x: [0, 20, 0], y: [0, -10, 0] } : {}}
-                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
-              />
-            </motion.div>
-          ))}
+                key={skill.name}
+                variants={variants}
+                whileHover={{ y: -6, rotateX: 1.2, rotateY: -1.2 }}
+                className="group relative overflow-hidden rounded-xl md:rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[0.03] p-3 md:p-4 backdrop-blur-sm">
+                {/* Gradient outline on hover */}
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-xl md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background:
+                      "linear-gradient(120deg, rgba(56,189,248,0.25), rgba(236,72,153,0.25))",
+                    mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                    WebkitMask:
+                      "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                  }}
+                />
+
+                {/* Aura glow */}
+                <div
+                  className="absolute -inset-8 md:-inset-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-3xl"
+                  style={{
+                    background:
+                      "radial-gradient(120px 80px at 20% 20%, rgba(56,189,248,0.15), transparent), radial-gradient(120px 80px at 80% 80%, rgba(236,72,153,0.12), transparent)",
+                  }}
+                />
+
+                <div className="relative flex items-center gap-2 md:gap-3">
+                  {/* Icon chip */}
+                  <div className="relative w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex-shrink-0">
+                    <div
+                      className="absolute inset-0 rounded-xl md:rounded-2xl bg-gradient-to-tr from-cyan-400/20 to-pink-500/20"
+                      aria-hidden
+                    />
+                    <div className="absolute inset-[3px] md:inset-[4px] rounded-lg md:rounded-xl bg-navy/80 border border-white/10 flex items-center justify-center">
+                      <Image
+                        src={skill.image}
+                        alt={skill.name}
+                        width={80}
+                        height={80}
+                        className={`w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 object-contain ${
+                          skill.invert ? "invert" : ""
+                        }`}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
+                      <h3 className="text-xs md:text-sm lg:text-base font-semibold text-white whitespace-normal break-words">
+                        {skill.name}
+                      </h3>
+                      <span className="text-[9px] md:text-[10px] px-1.5 md:px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-gray-300">
+                        {skill.category}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-[10px] md:text-xs text-gray-400 line-clamp-2">
+                      Building modern interfaces and systems with {skill.name}.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Shine */}
+                <motion.div
+                  className="pointer-events-none absolute -top-6 md:-top-8 -left-6 md:-left-8 h-16 md:h-24 w-16 md:w-24 rounded-full bg-white/10 blur-2xl"
+                  animate={isInView ? { x: [0, 20, 0], y: [0, -10, 0] } : {}}
+                  transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
+                />
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         {/* Background accents */}
